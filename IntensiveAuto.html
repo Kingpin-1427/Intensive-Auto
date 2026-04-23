@@ -1,0 +1,2095 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#0a0a0b">
+<title>Intensive Auto Solutions</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='42' fill='none' stroke='%2322d3ee' stroke-width='5'/%3E%3Cpath d='M 20 55 Q 30 42 50 42 Q 70 42 82 52 L 78 56 Q 68 48 50 48 Q 32 48 24 58 Z' fill='%2322d3ee'/%3E%3C/svg%3E">
+<style>
+:root {
+  --bg: #0a0a0b;
+  --surface: #121214;
+  --surface-2: #1a1a1d;
+  --surface-3: #232327;
+  --border: #2a2a2f;
+  --border-bright: #3a3a40;
+  --text: #eeeef0;
+  --text-dim: #9a9aa3;
+  --text-muted: #5a5a62;
+  --brand: #22d3ee;
+  --brand-dim: #0891a8;
+  --brand-glow: rgba(34, 211, 238, 0.15);
+  --success: #34d399;
+  --success-bg: rgba(52, 211, 153, 0.15);
+  --warn: #fbbf24;
+  --warn-bg: rgba(251, 191, 36, 0.15);
+  --danger: #f87171;
+  --danger-bg: rgba(248, 113, 113, 0.15);
+  --info: #60a5fa;
+  --info-bg: rgba(96, 165, 250, 0.15);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+html, body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', Roboto, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  letter-spacing: -0.01em;
+  -webkit-font-smoothing: antialiased;
+  overscroll-behavior: none;
+}
+body::before {
+  content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 0;
+  background: radial-gradient(ellipse 80% 50% at 20% 0%, rgba(34,211,238,0.08), transparent 60%),
+              radial-gradient(ellipse 60% 40% at 100% 100%, rgba(34,211,238,0.04), transparent 60%);
+}
+.app { position: relative; z-index: 1; max-width: 1400px; margin: 0 auto; min-height: 100vh; display: flex; flex-direction: column; }
+
+/* HEADER */
+header {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  padding: 14px 18px;
+  display: flex; align-items: center; gap: 12px;
+  position: sticky; top: 0; z-index: 10;
+  backdrop-filter: blur(12px);
+}
+.logo { display: flex; align-items: center; gap: 10px; }
+.logo svg { width: 36px; height: 36px; flex-shrink: 0; }
+.logo-text .brand-name { font-size: 14px; font-weight: 800; letter-spacing: 0.05em; text-transform: uppercase; line-height: 1; }
+.logo-text .brand-tag { font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--brand); margin-top: 3px; }
+.header-spacer { flex: 1; }
+.header-date { font-size: 10px; color: var(--text-muted); letter-spacing: 0.1em; text-transform: uppercase; font-family: 'JetBrains Mono', monospace; }
+
+/* NAV */
+nav {
+  display: flex; gap: 2px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  overflow-x: auto;
+  scrollbar-width: none;
+  padding: 0 8px;
+  position: sticky; top: 65px; z-index: 9;
+}
+nav::-webkit-scrollbar { display: none; }
+.nav-btn {
+  background: transparent; border: none; color: var(--text-dim);
+  padding: 12px 14px; font-size: 12px; font-weight: 600;
+  letter-spacing: 0.05em; text-transform: uppercase;
+  cursor: pointer; white-space: nowrap;
+  border-bottom: 2px solid transparent;
+  font-family: inherit;
+  transition: color 0.15s, border-color 0.15s;
+}
+.nav-btn:hover { color: var(--text); }
+.nav-btn.active { color: var(--brand); border-bottom-color: var(--brand); }
+
+/* MAIN */
+main { flex: 1; padding: 18px; padding-bottom: 80px; }
+.view-title {
+  font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--text-muted); font-weight: 600; margin-bottom: 6px;
+}
+.view-heading {
+  font-size: 28px; font-weight: 800; letter-spacing: -0.03em;
+  text-transform: uppercase; margin-bottom: 20px;
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+}
+
+/* CARDS */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 12px;
+}
+.card-accent { border-top: 1px solid var(--brand-dim); }
+.card-title {
+  font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--text-muted); font-weight: 600; margin-bottom: 4px;
+}
+
+/* KPI GRID */
+.kpi-grid {
+  display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px;
+  margin-bottom: 20px;
+}
+.kpi-grid > div {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-top: 1px solid var(--brand-dim);
+  border-radius: 8px;
+  padding: 14px;
+}
+.kpi-grid .kpi-accent {
+  background: linear-gradient(180deg, var(--surface) 0%, var(--surface-2) 100%);
+}
+.kpi-label { font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-muted); font-weight: 600; margin-bottom: 6px; }
+.kpi-value { font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 24px; font-weight: 800; letter-spacing: -0.03em; }
+.kpi-value.accent { color: var(--brand); }
+.kpi-value.warn { color: var(--warn); }
+.kpi-value.danger { color: var(--danger); }
+.kpi-value.success { color: var(--success); }
+
+@media (min-width: 700px) {
+  .kpi-grid { grid-template-columns: repeat(4, 1fr); }
+}
+
+/* BUTTONS */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  gap: 6px; padding: 10px 16px; border-radius: 6px; border: none;
+  font-family: inherit; font-size: 13px; font-weight: 600;
+  letter-spacing: 0.05em; text-transform: uppercase; cursor: pointer;
+  transition: all 0.15s;
+}
+.btn-primary { background: var(--brand); color: #000; }
+.btn-primary:hover { background: #67e8f9; box-shadow: 0 0 20px var(--brand-glow); }
+.btn-ghost {
+  background: transparent; color: var(--text-dim);
+  border: 1px solid var(--border);
+}
+.btn-ghost:hover { color: var(--text); border-color: var(--border-bright); background: var(--surface-2); }
+.btn-danger { color: var(--danger); }
+.btn-danger:hover { color: #fca5a5; border-color: var(--danger); }
+.btn-sm { padding: 6px 10px; font-size: 11px; }
+.btn-icon { padding: 8px; width: 34px; }
+.btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+.view-header {
+  display: flex; justify-content: space-between; align-items: flex-end;
+  gap: 12px; margin-bottom: 20px; flex-wrap: wrap;
+}
+
+/* INPUTS */
+.input, select, textarea {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 10px 12px; border-radius: 6px; width: 100%;
+  font-family: inherit; font-size: 14px;
+  transition: border-color 0.15s;
+}
+.input:focus, select:focus, textarea:focus {
+  outline: none; border-color: var(--brand);
+  box-shadow: 0 0 0 3px var(--brand-glow);
+}
+label.field {
+  display: block; margin-bottom: 12px;
+}
+label.field > span {
+  display: block;
+  font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--text-muted); font-weight: 600; margin-bottom: 6px;
+}
+
+/* TAGS */
+.tag {
+  display: inline-flex; align-items: center; gap: 3px;
+  padding: 3px 8px; border-radius: 4px;
+  font-size: 9px; font-weight: 700;
+  letter-spacing: 0.08em; text-transform: uppercase;
+}
+.tag-in-stock, .tag-paid, .tag-completed { background: var(--success-bg); color: var(--success); border: 1px solid rgba(52,211,153,0.3); }
+.tag-low, .tag-in-progress { background: var(--warn-bg); color: var(--warn); border: 1px solid rgba(251,191,36,0.3); }
+.tag-out, .tag-unpaid { background: var(--danger-bg); color: var(--danger); border: 1px solid rgba(248,113,113,0.3); }
+.tag-on-order, .tag-scheduled { background: var(--info-bg); color: var(--info); border: 1px solid rgba(96,165,250,0.3); }
+
+/* LISTS / ROWS */
+.row {
+  display: flex; align-items: center; gap: 12px;
+  padding: 12px; background: var(--surface-2);
+  border: 1px solid var(--border); border-radius: 6px;
+  margin-bottom: 6px;
+  cursor: pointer; transition: border-color 0.15s;
+}
+.row:hover { border-color: var(--border-bright); }
+.row-main { flex: 1; min-width: 0; }
+.row-title { font-size: 14px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.row-sub { font-size: 11px; color: var(--text-muted); margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.row-value { font-family: 'JetBrains Mono', monospace; font-weight: 600; font-size: 13px; white-space: nowrap; }
+.row-time { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--brand); min-width: 50px; }
+
+/* MODAL */
+.modal-backdrop {
+  position: fixed; inset: 0; background: rgba(0,0,0,0.75);
+  backdrop-filter: blur(4px); z-index: 100;
+  display: flex; align-items: center; justify-content: center;
+  padding: 20px;
+}
+.modal {
+  background: var(--surface); border: 1px solid var(--border-bright);
+  border-radius: 10px; width: 100%; max-width: 500px;
+  max-height: 90vh; overflow-y: auto;
+}
+.modal-header {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 16px; border-bottom: 1px solid var(--border);
+}
+.modal-title {
+  font-size: 16px; font-weight: 800; letter-spacing: -0.02em;
+  text-transform: uppercase; font-family: 'JetBrains Mono', monospace;
+}
+.modal-body { padding: 16px; }
+.modal-footer {
+  display: flex; justify-content: flex-end; gap: 8px;
+  padding: 16px; border-top: 1px solid var(--border);
+}
+.modal-footer.space-between { justify-content: space-between; }
+
+/* EMPTY STATE */
+.empty {
+  text-align: center; padding: 48px 16px; color: var(--text-muted);
+}
+.empty svg { width: 40px; height: 40px; margin-bottom: 12px; opacity: 0.5; }
+.empty-text { font-size: 14px; margin-bottom: 16px; }
+
+/* SECTION HEADERS */
+.section-header {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 12px;
+}
+.section-title {
+  font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--text-muted); font-weight: 600;
+}
+
+/* SUPPLIES */
+.supply-filters {
+  display: flex; gap: 6px; overflow-x: auto;
+  margin-bottom: 16px; padding-bottom: 4px;
+  scrollbar-width: none;
+}
+.supply-filters::-webkit-scrollbar { display: none; }
+.filter-chip {
+  background: var(--surface-2); border: 1px solid var(--border);
+  color: var(--text-dim); padding: 6px 12px; border-radius: 20px;
+  font-size: 11px; font-weight: 600; cursor: pointer;
+  white-space: nowrap; font-family: inherit;
+  text-transform: uppercase; letter-spacing: 0.05em;
+}
+.filter-chip.active { background: var(--brand); color: #000; border-color: var(--brand); }
+
+.supply-row {
+  display: flex; align-items: center; gap: 10px;
+  padding: 12px; background: var(--surface-2);
+  border: 1px solid var(--border); border-radius: 6px;
+  margin-bottom: 6px;
+}
+.supply-info { flex: 1; min-width: 0; }
+.supply-name { font-size: 13px; font-weight: 500; }
+.supply-cat { font-size: 10px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; margin-top: 2px; }
+.supply-status-btn {
+  padding: 6px 10px; border-radius: 4px; border: 1px solid;
+  font-size: 9px; font-weight: 700; letter-spacing: 0.08em;
+  text-transform: uppercase; cursor: pointer; font-family: inherit;
+  min-width: 80px;
+}
+
+/* STATS BAR */
+.stats-bar {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px;
+  margin-bottom: 16px;
+}
+.stat-card {
+  padding: 10px 8px; border-radius: 6px; text-align: center;
+  border: 1px solid;
+}
+.stat-card.total { background: var(--surface-2); border-color: var(--border); }
+.stat-card.good { background: var(--success-bg); border-color: rgba(52,211,153,0.3); }
+.stat-card.warn { background: var(--warn-bg); border-color: rgba(251,191,36,0.3); }
+.stat-card.bad { background: var(--danger-bg); border-color: rgba(248,113,113,0.3); }
+.stat-card.info { background: var(--info-bg); border-color: rgba(96,165,250,0.3); }
+.stat-num { font-family: 'JetBrains Mono', monospace; font-size: 20px; font-weight: 800; line-height: 1; }
+.stat-label { font-size: 9px; letter-spacing: 0.08em; text-transform: uppercase; margin-top: 4px; }
+
+/* TABLES */
+.table-wrap { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 12px; }
+thead { background: var(--surface-2); }
+th {
+  text-align: left; padding: 10px; font-size: 9px;
+  letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--text-muted); font-weight: 600;
+}
+td {
+  padding: 10px; border-top: 1px solid var(--border);
+}
+
+/* SEARCH */
+.search-wrap { position: relative; margin-bottom: 12px; }
+.search-wrap svg {
+  position: absolute; left: 12px; top: 50%; transform: translateY(-50%);
+  width: 14px; height: 14px; color: var(--text-muted);
+}
+.search-wrap input { padding-left: 36px; }
+
+/* CUSTOMER DETAIL */
+.info-grid {
+  display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px;
+  margin-bottom: 16px;
+}
+.info-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px; background: var(--surface-2); border-radius: 6px;
+}
+.info-item svg { width: 14px; height: 14px; color: var(--brand); flex-shrink: 0; }
+.info-item-label { font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-muted); }
+.info-item-value { font-family: 'JetBrains Mono', monospace; font-size: 12px; }
+
+/* UTILS */
+.flex { display: flex; }
+.flex-between { display: flex; justify-content: space-between; align-items: center; }
+.gap-2 { gap: 8px; }
+.mono { font-family: 'JetBrains Mono', ui-monospace, monospace; }
+.text-dim { color: var(--text-dim); }
+.text-muted { color: var(--text-muted); }
+.text-sm { font-size: 12px; }
+.text-xs { font-size: 10px; }
+.mb-2 { margin-bottom: 8px; }
+.mb-4 { margin-bottom: 16px; }
+.text-right { text-align: right; }
+.hidden { display: none !important; }
+
+/* TOAST */
+#toast {
+  position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+  background: var(--surface); border: 1px solid var(--brand);
+  color: var(--text); padding: 12px 20px; border-radius: 8px;
+  font-size: 13px; font-weight: 600; z-index: 200;
+  box-shadow: 0 0 20px var(--brand-glow);
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.2s, transform 0.2s;
+}
+#toast.show { opacity: 1; transform: translateX(-50%) translateY(-4px); }
+
+/* CHECKBOX */
+.checkbox-field { display: flex; align-items: center; gap: 8px; margin-bottom: 16px; cursor: pointer; font-size: 13px; }
+.checkbox-field input { width: 16px; height: 16px; accent-color: var(--brand); }
+</style>
+</head>
+<body>
+
+<div class="app">
+
+<header>
+  <div class="logo">
+    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="50" cy="50" r="42" fill="none" stroke="var(--brand)" stroke-width="2.5" opacity="0.9"/>
+      <path d="M 20 55 Q 30 42 50 42 Q 70 42 82 52 L 78 56 Q 68 48 50 48 Q 32 48 24 58 Z" fill="var(--brand)" opacity="0.95"/>
+      <path d="M 16 56 L 28 52" stroke="var(--text-dim)" stroke-width="2" stroke-linecap="round"/>
+      <path d="M 58 30 L 60 34 L 64 36 L 60 38 L 58 42 L 56 38 L 52 36 L 56 34 Z" fill="var(--brand)"/>
+      <path d="M 68 32 L 69 34 L 71 35 L 69 36 L 68 38 L 67 36 L 65 35 L 67 34 Z" fill="var(--brand)" opacity="0.8"/>
+    </svg>
+    <div class="logo-text">
+      <div class="brand-name">Intensive</div>
+      <div class="brand-tag">Auto Solutions</div>
+    </div>
+  </div>
+  <div class="header-spacer"></div>
+  <div class="header-date" id="headerDate"></div>
+</header>
+
+<nav id="nav"></nav>
+
+<main id="main"></main>
+
+</div>
+
+<div id="modalRoot"></div>
+<div id="toast"></div>
+
+<script>
+/* ============================================================
+   STORAGE
+   ============================================================ */
+const KEY = 'ias_data_v1';
+
+function loadData() {
+  try {
+    const raw = localStorage.getItem(KEY);
+    if (raw) return JSON.parse(raw);
+  } catch(e) {}
+  return null;
+}
+
+function saveData() {
+  try {
+    localStorage.setItem(KEY, JSON.stringify(state));
+  } catch(e) {
+    toast('Could not save — storage full?');
+  }
+}
+
+/* ============================================================
+   SEED DATA
+   ============================================================ */
+const SEED_SERVICES = [
+  { id: 's_sedan',     name: 'Full Detail — Sedan/Coupe', price: 150, duration: 150, desc: 'Complete interior + exterior, vacuum, wipe-down' },
+  { id: 's_suv',       name: 'Full Detail — SUV',         price: 175, duration: 180, desc: 'Complete interior + exterior, vacuum, wipe-down' },
+  { id: 's_truck',     name: 'Full Detail — Truck',       price: 200, duration: 210, desc: 'Complete interior + exterior, vacuum, wipe-down' },
+  { id: 's_suburban',  name: 'Full Detail — Suburban',    price: 200, duration: 210, desc: 'Complete interior + exterior, vacuum, wipe-down' },
+  { id: 's_claywax',   name: 'Clay Bar + Wax Add-On',      price:  50, duration:  60, desc: 'Paint decontamination and protective wax' },
+  { id: 's_trim',      name: 'Black Trim Refurbish',        price:  20, duration:  30, desc: 'Restore faded plastic trim' },
+  { id: 's_throwup',   name: 'Throw-Up / Biohazard',        price:  80, duration:  60, desc: 'Sanitize and deep-clean contaminated interior' },
+  { id: 's_express',   name: 'Express Wash',                price:  45, duration:  45, desc: 'Hand wash, tire shine, interior wipe-down' },
+  { id: 's_interior',  name: 'Interior Deep Clean',         price: 125, duration: 150, desc: 'Shampoo, steam, leather conditioning' },
+  { id: 's_correction',name: 'Paint Correction',            price: 450, duration: 360, desc: 'Multi-stage polish, swirl removal' },
+  { id: 's_ceramic',   name: 'Ceramic Coating',             price: 800, duration: 480, desc: '9H ceramic application, 2-year protection' }
+];
+
+const SEED_CUSTOMERS = [
+  { id: 'c_jillian',   name: 'Jillian',         phone: '203-726-0769', email: '', vehicle: 'Ford Explorer / Ram 1500',         plate: '', notes: 'Two vehicles: Ford Explorer + Ram 1500' },
+  { id: 'c_jason',     name: 'Jason',           phone: '203-257-5967', email: '', vehicle: 'Nissan Pathfinder / Jeep Wrangler', plate: '', notes: 'Two vehicles: Nissan Pathfinder + Jeep Wrangler' },
+  { id: 'c_carla',     name: 'Carla',           phone: '203-414-1969', email: '', vehicle: 'Range Rover Sport',                 plate: '', notes: '' },
+  { id: 'c_linda',     name: 'Linda Pleva',     phone: '203-521-5343', email: '', vehicle: 'GMC Acadia',                        plate: '', notes: '' },
+  { id: 'c_lee',       name: 'Lee',             phone: '203-331-3185', email: '', vehicle: 'Chevy Tahoe',                       plate: '', notes: '' },
+  { id: 'c_mark',      name: 'Mark Crouse',     phone: '203-856-6556', email: '', vehicle: 'Porsche Macan / Audi Sedan',        plate: '', notes: 'Two vehicles. Good tipper ($25 on Macan)' },
+  { id: 'c_brittany',  name: 'Brittany',        phone: '203-395-7450', email: '', vehicle: 'Jeep Wagoneer',                     plate: '', notes: '$20 discount on last full detail' },
+  { id: 'c_anya',      name: 'Anya',            phone: '203-216-9204', email: '', vehicle: 'Audi SQ5',                          plate: '', notes: 'Tipped $25 on last detail' },
+  { id: 'c_john',      name: 'John',            phone: '203-940-2334', email: '', vehicle: 'Jeep Gladiator / Range Rover Discovery', plate: '', notes: 'Two vehicles. Tipped $25 on Range Rover' },
+  { id: 'c_tricia',    name: 'Tricia',          phone: '203-339-2969', email: '', vehicle: 'VW Atlas',                          plate: '', notes: '' },
+  { id: 'c_jen',       name: 'Jen Delawder',    phone: '203-520-1117', email: '', vehicle: 'BMW 430i',                          plate: '', notes: 'Receives 25% discount (friends & family)' },
+  { id: 'c_grandma',   name: 'Jake\'s Grandma', phone: '',             email: '', vehicle: 'Honda CRV / Honda Accord',           plate: '', notes: 'Two vehicles. Phone unknown.' },
+  { id: 'c_bruce',     name: 'Bruce',           phone: '917-882-3332', email: '', vehicle: 'Porsche Macan',                     plate: '', notes: 'Throw-up / biohazard cleanup job' }
+];
+
+const SEED_JOBS = [
+  { id:'j_01', customerId:'c_jillian',  vehicle:'Ford Explorer',          date:'', time:'09:00', serviceId:'s_suv',       amount:225, status:'completed', notes:'Full detail + clay bar and wax' },
+  { id:'j_02', customerId:'c_jillian',  vehicle:'Ram 1500',               date:'', time:'09:00', serviceId:'s_truck',     amount:250, status:'completed', notes:'Full detail + clay bar and wax' },
+  { id:'j_03', customerId:'c_jason',    vehicle:'Nissan Pathfinder',      date:'2025-07-02', time:'09:00', serviceId:'s_suv',   amount:195, status:'completed', notes:'Full detail + black trim refurbish' },
+  { id:'j_04', customerId:'c_jason',    vehicle:'Jeep Wrangler',          date:'2025-08-07', time:'09:00', serviceId:'s_suv',   amount:175, status:'completed', notes:'Full detail' },
+  { id:'j_05', customerId:'c_carla',    vehicle:'Range Rover Sport',      date:'2025-06-09', time:'09:00', serviceId:'s_suv',   amount:225, status:'completed', notes:'Full detail + clay bar and wax' },
+  { id:'j_06', customerId:'c_linda',    vehicle:'GMC Acadia',             date:'2025-07-19', time:'09:00', serviceId:'s_suv',   amount:225, status:'completed', notes:'Full detail + clay bar and wax' },
+  { id:'j_07', customerId:'c_lee',      vehicle:'Chevy Tahoe',            date:'2025-07-12', time:'09:00', serviceId:'s_suburban', amount:250, status:'completed', notes:'Full detail + clay bar and wax' },
+  { id:'j_08', customerId:'c_mark',     vehicle:'Porsche Macan',          date:'2025-06-25', time:'09:00', serviceId:'s_suv',   amount:200, status:'completed', notes:'Full detail (+$25 tip)' },
+  { id:'j_09', customerId:'c_mark',     vehicle:'Audi Sedan',             date:'2025-06-25', time:'09:00', serviceId:'s_sedan', amount:150, status:'completed', notes:'Full detail' },
+  { id:'j_10', customerId:'c_brittany', vehicle:'Jeep Wagoneer',          date:'2025-06-04', time:'09:00', serviceId:'s_suburban', amount:230, status:'completed', notes:'Full detail + clay bar and wax ($20 discount)' },
+  { id:'j_11', customerId:'c_anya',     vehicle:'Audi SQ5',               date:'2025-12-07', time:'09:00', serviceId:'s_suv',   amount:250, status:'completed', notes:'Full detail + clay bar and wax (+$25 tip)' },
+  { id:'j_12', customerId:'c_john',     vehicle:'Jeep Gladiator',         date:'2025-05-10', time:'09:00', serviceId:'s_truck', amount:200, status:'completed', notes:'Full detail' },
+  { id:'j_13', customerId:'c_john',     vehicle:'Range Rover Discovery',  date:'2025-05-10', time:'09:00', serviceId:'s_suv',   amount:200, status:'completed', notes:'Full detail (+$25 tip)' },
+  { id:'j_14', customerId:'c_tricia',   vehicle:'VW Atlas',               date:'2025-05-11', time:'09:00', serviceId:'s_suv',   amount:225, status:'completed', notes:'Full detail + clay bar and wax' },
+  { id:'j_15', customerId:'c_jen',      vehicle:'BMW 430i',               date:'2025-05-03', time:'09:00', serviceId:'s_sedan', amount:150, status:'completed', notes:'Full detail + clay bar and wax (25% discount)' },
+  { id:'j_16', customerId:'c_grandma',  vehicle:'Honda CRV',              date:'2025-08-06', time:'09:00', serviceId:'s_suv',   amount:225, status:'completed', notes:'Full detail + clay bar and wax' },
+  { id:'j_17', customerId:'c_grandma',  vehicle:'Honda Accord',           date:'2025-08-06', time:'09:00', serviceId:'s_sedan', amount:200, status:'completed', notes:'Full detail + clay bar and wax' },
+  { id:'j_18', customerId:'c_bruce',    vehicle:'Porsche Macan',          date:'2025-07-26', time:'09:00', serviceId:'s_throwup', amount:80, status:'completed', notes:'Throw-up cleaning' }
+];
+
+const SEED_INVOICES = SEED_JOBS.map((j, i) => ({
+  id: 'i_' + String(i+1).padStart(4, '0'),
+  jobId: j.id,
+  customerId: j.customerId,
+  amount: j.amount,
+  date: j.date,
+  paid: true,
+  description: j.notes
+}));
+
+const SEED_SUPPLIES = [
+  {
+    "cat": "Interior",
+    "item": "All-purpose cleaner (APC)",
+    "status": "In Stock"
+  },
+  {
+    "cat": "Interior",
+    "item": "Carpet & upholstery shampoo",
+    "status": "Out"
+  },
+  {
+    "cat": "Interior",
+    "item": "Leather cleaner",
+    "status": "In Stock"
+  },
+  {
+    "cat": "Interior",
+    "item": "Leather conditioner",
+    "status": "Out"
+  },
+  {
+    "cat": "Interior",
+    "item": "Fabric/upholstery spot remover",
+    "status": "Low"
+  },
+  {
+    "cat": "Interior",
+    "item": "Dashboard / plastic dressing",
+    "status": "Out"
+  },
+  {
+    "cat": "Interior",
+    "item": "Odor eliminator / air freshener",
+    "status": "In Stock"
+  },
+  {
+    "cat": "Interior",
+    "item": "Stain pre-treatment",
+    "status": "Out"
+  },
+  {
+    "cat": "Interior",
+    "item": "Interior protectant (UV)",
+    "status": "Out"
+  },
+  {
+    "cat": "Interior",
+    "item": "Steam cleaning solution",
+    "status": "Out"
+  },
+  {
+    "cat": "Interior",
+    "item": "Pet hair remover tool",
+    "status": "In Stock"
+  },
+  {
+    "cat": "Interior",
+    "item": "Detail brushes (soft)",
+    "status": "Low"
+  },
+  {
+    "cat": "Interior",
+    "item": "Crevice / vent brushes",
+    "status": "Out"
+  },
+  {
+    "cat": "Interior",
+    "item": "Interior microfibers",
+    "status": "Low"
+  },
+  {
+    "cat": "Exterior",
+    "item": "Car wash soap (pH neutral)",
+    "status": "Low"
+  },
+  {
+    "cat": "Exterior",
+    "item": "Snow foam / pre-wash",
+    "status": "Low"
+  },
+  {
+    "cat": "Exterior",
+    "item": "Bug & tar remover",
+    "status": "In Stock"
+  },
+  {
+    "cat": "Exterior",
+    "item": "Iron fallout remover",
+    "status": "Out"
+  },
+  {
+    "cat": "Exterior",
+    "item": "Clay Kit",
+    "status": "Low"
+  },
+  {
+    "cat": "Exterior",
+    "item": "Polishing compound",
+    "status": "Out"
+  },
+  {
+    "cat": "Exterior",
+    "item": "Finishing polish",
+    "status": "Out"
+  },
+  {
+    "cat": "Exterior",
+    "item": "Carnauba wax",
+    "status": "Low"
+  },
+  {
+    "cat": "Exterior",
+    "item": "Synthetic sealant",
+    "status": "Out"
+  },
+  {
+    "cat": "Exterior",
+    "item": "Ceramic spray coating",
+    "status": "Out"
+  },
+  {
+    "cat": "Exterior",
+    "item": "Quick detailer spray",
+    "status": "Low"
+  },
+  {
+    "cat": "Exterior",
+    "item": "Trim restorer / black plastic dressing",
+    "status": "Low"
+  },
+  {
+    "cat": "Exterior",
+    "item": "Paint decontamination spray",
+    "status": "Out"
+  },
+  {
+    "cat": "Exterior",
+    "item": "Drying towels (large)",
+    "status": "Low"
+  },
+  {
+    "cat": "Exterior",
+    "item": "Plush wash mitts",
+    "status": "Low"
+  },
+  {
+    "cat": "Wheels",
+    "item": "Wheel cleaner (acid-free)",
+    "status": "Out"
+  },
+  {
+    "cat": "Wheels",
+    "item": "Wheel cleaner (heavy duty)",
+    "status": "Out"
+  },
+  {
+    "cat": "Wheels",
+    "item": "Iron remover (wheels)",
+    "status": "Out"
+  },
+  {
+    "cat": "Wheels",
+    "item": "Tire cleaner / degreaser",
+    "status": "Out"
+  },
+  {
+    "cat": "Wheels",
+    "item": "Tire dressing (shine)",
+    "status": "Low"
+  },
+  {
+    "cat": "Wheels",
+    "item": "Tire dressing (matte)",
+    "status": "Out"
+  },
+  {
+    "cat": "Wheels",
+    "item": "Wheel brushes (soft)",
+    "status": "Out"
+  },
+  {
+    "cat": "Wheels",
+    "item": "Barrel / lug nut brushes",
+    "status": "Out"
+  },
+  {
+    "cat": "Wheels",
+    "item": "Tire applicator pads",
+    "status": "Low"
+  },
+  {
+    "cat": "Wheels",
+    "item": "Wheel woolies",
+    "status": "Out"
+  },
+  {
+    "cat": "Glass",
+    "item": "Glass cleaner (streak-free)",
+    "status": "Low"
+  },
+  {
+    "cat": "Glass",
+    "item": "Glass polish / water spot remover",
+    "status": "Low"
+  },
+  {
+    "cat": "Glass",
+    "item": "Rain repellent (e.g. Rain-X)",
+    "status": "Out"
+  },
+  {
+    "cat": "Glass",
+    "item": "Glass microfibers (waffle weave)",
+    "status": "Low"
+  },
+  {
+    "cat": "Glass",
+    "item": "Razor blades (for decal removal)",
+    "status": "Out"
+  },
+  {
+    "cat": "Engine Bay",
+    "item": "Engine degreaser",
+    "status": "Out"
+  },
+  {
+    "cat": "Engine Bay",
+    "item": "Engine bay dressing",
+    "status": "Out"
+  },
+  {
+    "cat": "Engine Bay",
+    "item": "Engine bay brushes",
+    "status": "Out"
+  },
+  {
+    "cat": "Equipment",
+    "item": "Dual-action polisher",
+    "status": "Out"
+  },
+  {
+    "cat": "Equipment",
+    "item": "Rotary polisher",
+    "status": "Out"
+  },
+  {
+    "cat": "Equipment",
+    "item": "Polishing pads (cutting)",
+    "status": "Out"
+  },
+  {
+    "cat": "Equipment",
+    "item": "Polishing pads (finishing)",
+    "status": "Out"
+  },
+  {
+    "cat": "Equipment",
+    "item": "Shop vacuum",
+    "status": "In Stock"
+  },
+  {
+    "cat": "Equipment",
+    "item": "Pressure washer",
+    "status": "On Order"
+  },
+  {
+    "cat": "Equipment",
+    "item": "Foam cannon",
+    "status": "Low"
+  },
+  {
+    "cat": "Equipment",
+    "item": "Steam cleaner",
+    "status": "Out"
+  },
+  {
+    "cat": "Equipment",
+    "item": "Extractor (carpet/upholstery)",
+    "status": "Out"
+  },
+  {
+    "cat": "Equipment",
+    "item": "Air compressor / blower",
+    "status": "Low"
+  },
+  {
+    "cat": "Equipment",
+    "item": "LED inspection light",
+    "status": "Out"
+  },
+  {
+    "cat": "Equipment",
+    "item": "Extension cords",
+    "status": "In Stock"
+  },
+  {
+    "cat": "Equipment",
+    "item": "Water hose + reel",
+    "status": "Low"
+  },
+  {
+    "cat": "Equipment",
+    "item": "Bucket Wheels",
+    "status": "Out"
+  },
+  {
+    "cat": "Equipment",
+    "item": "Buckets with Grit Guards (wash + rinse)",
+    "status": "Low"
+  },
+  {
+    "cat": "Equipment",
+    "item": "Spray bottles (empty)",
+    "status": "Out"
+  },
+  {
+    "cat": "Equipment",
+    "item": "Measuring cups / syringes",
+    "status": "Out"
+  },
+  {
+    "cat": "Consumables",
+    "item": "Microfiber towels \u2014 general",
+    "status": "Low"
+  },
+  {
+    "cat": "Consumables",
+    "item": "Microfiber towels \u2014 edgeless (finishing)",
+    "status": "Low"
+  },
+  {
+    "cat": "Consumables",
+    "item": "Applicator pads (foam)",
+    "status": "Low"
+  },
+  {
+    "cat": "Consumables",
+    "item": "Applicator pads (microfiber)",
+    "status": "Low"
+  },
+  {
+    "cat": "Consumables",
+    "item": "Masking tape",
+    "status": "Out"
+  },
+  {
+    "cat": "Consumables",
+    "item": "Nitrile gloves",
+    "status": "Out"
+  },
+  {
+    "cat": "Consumables",
+    "item": "Shop towels (paper)",
+    "status": "Out"
+  },
+  {
+    "cat": "Consumables",
+    "item": "Trash bags",
+    "status": "Out"
+  },
+  {
+    "cat": "Safety",
+    "item": "Respirator / mask",
+    "status": "Out"
+  },
+  {
+    "cat": "Safety",
+    "item": "Safety glasses",
+    "status": "Out"
+  },
+  {
+    "cat": "Safety",
+    "item": "First aid kit",
+    "status": "Out"
+  },
+  {
+    "cat": "Safety",
+    "item": "Knee pads",
+    "status": "Out"
+  },
+  {
+    "cat": "Safety",
+    "item": "Waterproof apron",
+    "status": "Out"
+  }
+];
+
+const SEED_EXPENSE_CATEGORIES = ['Supplies','Fuel','Tools','Equipment','Insurance','Marketing','Software','Office','Phone','Rent','Licenses','Maintenance','Training','Meals','Travel','Other'];
+const SEED_PAYMENT_METHODS = ['Cash','Debit Card','Credit Card','Check','Venmo','Zelle','Other'];
+
+/* ============================================================
+   STATE
+   ============================================================ */
+let state = loadData() || {
+  customers: SEED_CUSTOMERS,
+  jobs: SEED_JOBS,
+  invoices: SEED_INVOICES,
+  services: SEED_SERVICES,
+  expenses: [],
+  supplies: SEED_SUPPLIES,
+  currentView: 'dashboard'
+};
+
+// Ensure all keys exist (in case of schema drift)
+if (!state.customers) state.customers = SEED_CUSTOMERS;
+if (!state.jobs) state.jobs = SEED_JOBS;
+if (!state.invoices) state.invoices = SEED_INVOICES;
+if (!state.services) state.services = SEED_SERVICES;
+if (!state.expenses) state.expenses = [];
+if (!state.supplies) state.supplies = SEED_SUPPLIES;
+if (!state.currentView) state.currentView = 'dashboard';
+
+/* ============================================================
+   HELPERS
+   ============================================================ */
+function $(sel, root) { return (root || document).querySelector(sel); }
+function $$(sel, root) { return Array.from((root || document).querySelectorAll(sel)); }
+function el(tag, opts, children) {
+  const node = document.createElement(tag);
+  if (opts) {
+    if (opts.class) node.className = opts.class;
+    if (opts.text !== undefined) node.textContent = opts.text;
+    if (opts.html !== undefined) node.innerHTML = opts.html;
+    if (opts.attrs) for (const k in opts.attrs) node.setAttribute(k, opts.attrs[k]);
+    if (opts.on) for (const k in opts.on) node.addEventListener(k, opts.on[k]);
+  }
+  if (children) {
+    for (const c of children) if (c != null && c !== false) node.appendChild(c);
+  }
+  return node;
+}
+function fmt$(n) {
+  if (n == null || isNaN(n)) return '$0';
+  return '$' + Math.round(n).toLocaleString();
+}
+function today() { return new Date().toISOString().slice(0, 10); }
+function nextId(prefix) { return prefix + '_' + Date.now().toString(36); }
+function uid() { return Math.random().toString(36).slice(2, 9); }
+
+function toast(msg) {
+  const t = $('#toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toast._t);
+  toast._t = setTimeout(() => t.classList.remove('show'), 2000);
+}
+
+function update() {
+  saveData();
+  render();
+}
+
+function confirmAction(msg, fn) {
+  if (confirm(msg)) fn();
+}
+
+function findById(list, id) { return list.find(x => x.id === id); }
+
+/* ============================================================
+   ICONS (inline SVG)
+   ============================================================ */
+const ICONS = {
+  dashboard: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="16" width="7" height="5"/></svg>',
+  calendar: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>',
+  users: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>',
+  wrench: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>',
+  receipt: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1z"/><line x1="9" y1="7" x2="15" y2="7"/><line x1="9" y1="11" x2="15" y2="11"/></svg>',
+  package: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="16.5" y1="9.4" x2="7.5" y2="4.21"/><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>',
+  dollar: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>',
+  plus: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>',
+  x: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>',
+  trash: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>',
+  edit: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>',
+  phone: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>',
+  car: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 16H9m10 0h3v-3.15a1 1 0 0 0-.84-.99L16 11l-2.7-3.6a1 1 0 0 0-.8-.4H5.24a2 2 0 0 0-1.8 1.1l-.8 1.63A6 6 0 0 0 2 12.42V16h2"/><circle cx="6.5" cy="16.5" r="2.5"/><circle cx="16.5" cy="16.5" r="2.5"/></svg>',
+  search: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>',
+  check: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>',
+  chevronRight: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>'
+};
+
+function icon(name) {
+  const s = document.createElement('span');
+  s.innerHTML = ICONS[name] || '';
+  const svg = s.firstChild;
+  if (svg) { svg.style.width = '14px'; svg.style.height = '14px'; }
+  return svg;
+}
+
+/* ============================================================
+   NAV
+   ============================================================ */
+const VIEWS = [
+  { id: 'dashboard', label: 'Dashboard', icon: 'dashboard' },
+  { id: 'schedule',  label: 'Schedule',  icon: 'calendar' },
+  { id: 'customers', label: 'Customers', icon: 'users' },
+  { id: 'jobs',      label: 'Jobs',      icon: 'wrench' },
+  { id: 'invoices',  label: 'Invoices',  icon: 'receipt' },
+  { id: 'expenses',  label: 'Expenses',  icon: 'dollar' },
+  { id: 'supplies',  label: 'Supplies',  icon: 'package' },
+  { id: 'services',  label: 'Services',  icon: 'wrench' }
+];
+
+function renderNav() {
+  const nav = $('#nav');
+  nav.innerHTML = '';
+  VIEWS.forEach(v => {
+    const btn = el('button', {
+      class: 'nav-btn' + (state.currentView === v.id ? ' active' : ''),
+      text: v.label,
+      on: { click: () => { state.currentView = v.id; update(); } }
+    });
+    nav.appendChild(btn);
+  });
+}
+
+/* ============================================================
+   DASHBOARD
+   ============================================================ */
+function renderDashboard() {
+  const main = $('#main');
+  main.innerHTML = '';
+
+  main.appendChild(el('div', { class: 'view-title', text: 'Operations Overview' }));
+  main.appendChild(el('h1', { class: 'view-heading', text: 'Dashboard' }));
+
+  const now = new Date();
+  const todayStr = today();
+  const todayJobs = state.jobs.filter(j => j.date === todayStr);
+  const upcoming = state.jobs.filter(j => j.date >= todayStr && j.status !== 'completed')
+    .sort((a,b) => (a.date+a.time).localeCompare(b.date+b.time));
+  const completedMonth = state.jobs.filter(j => {
+    if (j.status !== 'completed' || !j.date) return false;
+    const d = new Date(j.date);
+    return d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear();
+  });
+  const monthRevenue = completedMonth.reduce((s, j) => s + (j.amount || 0), 0);
+  const totalRevenue = state.invoices.filter(i => i.paid).reduce((s, i) => s + (i.amount || 0), 0);
+  const unpaid = state.invoices.filter(i => !i.paid).reduce((s, i) => s + (i.amount || 0), 0);
+  const totalExpenses = state.expenses.reduce((s, e) => s + (e.amount || 0), 0);
+  const netProfit = totalRevenue - totalExpenses;
+
+  // KPI cards
+  const grid = el('div', { class: 'kpi-grid' });
+  grid.appendChild(kpiCard('Customers', state.customers.length, ''));
+  grid.appendChild(kpiCard('Total Revenue', fmt$(totalRevenue), 'accent'));
+  grid.appendChild(kpiCard('This Month', fmt$(monthRevenue), ''));
+  grid.appendChild(kpiCard('Outstanding', fmt$(unpaid), unpaid > 0 ? 'warn' : ''));
+  grid.appendChild(kpiCard('Expenses', fmt$(totalExpenses), totalExpenses > 0 ? 'danger' : ''));
+  grid.appendChild(kpiCard('Net Profit', fmt$(netProfit), netProfit >= 0 ? 'success' : 'danger'));
+  grid.appendChild(kpiCard('Today\'s Jobs', todayJobs.length, ''));
+  grid.appendChild(kpiCard('Completed MTD', completedMonth.length, ''));
+  main.appendChild(grid);
+
+  // Today's jobs
+  const todayCard = el('div', { class: 'card' });
+  const todayHead = el('div', { class: 'section-header' });
+  const todayTitle = el('div');
+  todayTitle.appendChild(el('div', { class: 'card-title', text: 'On Deck' }));
+  todayTitle.appendChild(el('h2', { text: 'Today\'s Jobs', attrs: { style: 'font-family: \"JetBrains Mono\", monospace; font-size: 16px; font-weight: 800; text-transform: uppercase; letter-spacing: -0.02em;' } }));
+  todayHead.appendChild(todayTitle);
+  const schedBtn = el('button', { class: 'btn btn-ghost btn-sm', text: 'Schedule ›', on: { click: () => { state.currentView = 'schedule'; update(); } } });
+  todayHead.appendChild(schedBtn);
+  todayCard.appendChild(todayHead);
+
+  if (todayJobs.length === 0) {
+    todayCard.appendChild(emptyState('No jobs scheduled today', 'Add a job', () => openJobModal(null)));
+  } else {
+    todayJobs.sort((a,b) => (a.time||'').localeCompare(b.time||''));
+    todayJobs.forEach(j => todayCard.appendChild(renderJobRow(j)));
+  }
+  main.appendChild(todayCard);
+
+  // Upcoming
+  if (upcoming.length > 0) {
+    const upCard = el('div', { class: 'card' });
+    upCard.appendChild(el('div', { class: 'card-title', text: 'Coming Up' }));
+    upCard.appendChild(el('h2', { text: 'Next ' + Math.min(5, upcoming.length) + ' Jobs', attrs: { style: 'font-family: \"JetBrains Mono\", monospace; font-size: 16px; font-weight: 800; text-transform: uppercase; letter-spacing: -0.02em; margin-bottom: 12px;' } }));
+    upcoming.slice(0, 5).forEach(j => {
+      const c = findById(state.customers, j.customerId);
+      const s = findById(state.services, j.serviceId);
+      const row = el('div', { class: 'row', on: { click: () => openJobModal(j) } });
+      row.appendChild(el('div', { class: 'row-time', text: j.date ? new Date(j.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) : '—' }));
+      const main = el('div', { class: 'row-main' });
+      main.appendChild(el('div', { class: 'row-title', text: c ? c.name : 'Unknown' }));
+      main.appendChild(el('div', { class: 'row-sub', text: (s ? s.name : '') + ' · ' + (j.time || '') }));
+      row.appendChild(main);
+      row.appendChild(el('div', { class: 'row-value', text: fmt$(j.amount) }));
+      upCard.appendChild(row);
+    });
+    main.appendChild(upCard);
+  }
+}
+
+function kpiCard(label, value, cls) {
+  const div = el('div', { class: cls === 'accent' ? 'kpi-accent' : '' });
+  div.appendChild(el('div', { class: 'kpi-label', text: label }));
+  div.appendChild(el('div', { class: 'kpi-value ' + (cls || ''), text: String(value) }));
+  return div;
+}
+
+function renderJobRow(j) {
+  const c = findById(state.customers, j.customerId);
+  const s = findById(state.services, j.serviceId);
+  const row = el('div', { class: 'row', on: { click: () => openJobModal(j) } });
+  row.appendChild(el('div', { class: 'row-time', text: j.time || '—' }));
+  const main = el('div', { class: 'row-main' });
+  main.appendChild(el('div', { class: 'row-title', text: c ? c.name : 'Unknown' }));
+  main.appendChild(el('div', { class: 'row-sub', text: (j.vehicle || '') + ' · ' + (s ? s.name : '') }));
+  row.appendChild(main);
+  const tag = el('span', { class: 'tag tag-' + j.status, text: j.status });
+  row.appendChild(tag);
+  row.appendChild(el('div', { class: 'row-value', text: fmt$(j.amount) }));
+  return row;
+}
+
+function emptyState(text, btnText, onClick) {
+  const e = el('div', { class: 'empty' });
+  const s = el('div');
+  s.innerHTML = ICONS.calendar;
+  const svg = s.firstChild;
+  svg.style.width = '40px';
+  svg.style.height = '40px';
+  svg.style.opacity = '0.4';
+  e.appendChild(svg);
+  e.appendChild(el('div', { class: 'empty-text', text: text }));
+  if (btnText) {
+    const b = el('button', { class: 'btn btn-ghost', text: btnText, on: { click: onClick } });
+    const plus = icon('plus');
+    b.prepend(plus);
+    e.appendChild(b);
+  }
+  return e;
+}
+
+/* ============================================================
+   SCHEDULE
+   ============================================================ */
+function renderSchedule() {
+  const main = $('#main');
+  main.innerHTML = '';
+
+  const header = el('div', { class: 'view-header' });
+  const titleDiv = el('div');
+  titleDiv.appendChild(el('div', { class: 'view-title', text: state.jobs.length + ' total' }));
+  titleDiv.appendChild(el('h1', { class: 'view-heading', text: 'Schedule' }));
+  header.appendChild(titleDiv);
+
+  const newBtn = el('button', { class: 'btn btn-primary', text: 'New Job', on: { click: () => openJobModal(null) } });
+  newBtn.prepend(icon('plus'));
+  header.appendChild(newBtn);
+  main.appendChild(header);
+
+  const filter = state.scheduleFilter || 'upcoming';
+  const filters = el('div', { class: 'supply-filters' });
+  ['upcoming', 'completed', 'all'].forEach(f => {
+    const chip = el('button', {
+      class: 'filter-chip' + (filter === f ? ' active' : ''),
+      text: f,
+      on: { click: () => { state.scheduleFilter = f; update(); } }
+    });
+    filters.appendChild(chip);
+  });
+  main.appendChild(filters);
+
+  const todayStr = today();
+  let list = state.jobs.slice();
+  if (filter === 'upcoming') list = list.filter(j => j.date >= todayStr && j.status !== 'completed');
+  else if (filter === 'completed') list = list.filter(j => j.status === 'completed');
+
+  list.sort((a,b) => {
+    if (filter === 'completed') return (b.date+b.time).localeCompare(a.date+a.time);
+    return (a.date+a.time).localeCompare(b.date+b.time);
+  });
+
+  if (list.length === 0) {
+    const card = el('div', { class: 'card' });
+    card.appendChild(emptyState('No jobs in this view', 'Create a job', () => openJobModal(null)));
+    main.appendChild(card);
+    return;
+  }
+
+  // Group by date
+  const grouped = {};
+  list.forEach(j => {
+    const key = j.date || 'Undated';
+    if (!grouped[key]) grouped[key] = [];
+    grouped[key].push(j);
+  });
+
+  Object.keys(grouped).forEach(date => {
+    const card = el('div', { class: 'card' });
+    const head = el('div', { attrs: { style: 'display: flex; align-items: baseline; gap: 10px; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px solid var(--border);' } });
+    const dateLabel = date === 'Undated' ? 'Undated' : new Date(date).toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' });
+    head.appendChild(el('div', { text: dateLabel, attrs: { style: 'font-family: \"JetBrains Mono\", monospace; font-size: 14px; font-weight: 800; text-transform: uppercase;' } }));
+    head.appendChild(el('div', { class: 'mono text-xs text-muted', text: grouped[date].length + ' job' + (grouped[date].length !== 1 ? 's' : '') }));
+    card.appendChild(head);
+    grouped[date].sort((a,b) => (a.time||'').localeCompare(b.time||''));
+    grouped[date].forEach(j => card.appendChild(renderJobRow(j)));
+    main.appendChild(card);
+  });
+}
+
+/* ============================================================
+   CUSTOMERS
+   ============================================================ */
+function renderCustomers() {
+  const main = $('#main');
+  main.innerHTML = '';
+
+  const header = el('div', { class: 'view-header' });
+  const titleDiv = el('div');
+  titleDiv.appendChild(el('div', { class: 'view-title', text: state.customers.length + ' on file' }));
+  titleDiv.appendChild(el('h1', { class: 'view-heading', text: 'Customers' }));
+  header.appendChild(titleDiv);
+  const newBtn = el('button', { class: 'btn btn-primary', text: 'Add', on: { click: () => openCustomerModal(null) } });
+  newBtn.prepend(icon('plus'));
+  header.appendChild(newBtn);
+  main.appendChild(header);
+
+  // Search
+  const search = state.customerSearch || '';
+  const searchWrap = el('div', { class: 'search-wrap' });
+  const searchSvg = icon('search');
+  searchWrap.appendChild(searchSvg);
+  const searchInput = el('input', {
+    class: 'input',
+    attrs: { placeholder: 'Search name, vehicle, phone...', value: search }
+  });
+  searchInput.addEventListener('input', e => {
+    state.customerSearch = e.target.value;
+    // Rerender just the list, keep focus
+    renderCustomerList();
+  });
+  searchWrap.appendChild(searchInput);
+  main.appendChild(searchWrap);
+
+  const listWrap = el('div', { attrs: { id: 'custList' } });
+  main.appendChild(listWrap);
+
+  renderCustomerList();
+}
+
+function renderCustomerList() {
+  const wrap = $('#custList');
+  if (!wrap) return;
+  wrap.innerHTML = '';
+  const search = (state.customerSearch || '').toLowerCase();
+  let list = state.customers.slice();
+  if (search) {
+    list = list.filter(c =>
+      (c.name||'').toLowerCase().includes(search) ||
+      (c.vehicle||'').toLowerCase().includes(search) ||
+      (c.phone||'').includes(search)
+    );
+  }
+  list.sort((a,b) => a.name.localeCompare(b.name));
+
+  if (list.length === 0) {
+    const card = el('div', { class: 'card' });
+    card.appendChild(emptyState('No customers match', state.customers.length === 0 ? 'Add first customer' : null, () => openCustomerModal(null)));
+    wrap.appendChild(card);
+    return;
+  }
+
+  list.forEach(c => {
+    const jobCount = state.jobs.filter(j => j.customerId === c.id).length;
+    const spend = state.invoices.filter(i => i.customerId === c.id && i.paid).reduce((s,i) => s + (i.amount || 0), 0);
+    const row = el('div', { class: 'row', on: { click: () => openCustomerDetail(c.id) } });
+    const main = el('div', { class: 'row-main' });
+    main.appendChild(el('div', { class: 'row-title', text: c.name }));
+    main.appendChild(el('div', { class: 'row-sub', text: (c.vehicle || 'No vehicle') + (c.phone ? ' · ' + c.phone : '') }));
+    row.appendChild(main);
+    const meta = el('div', { attrs: { style: 'text-align: right;' } });
+    meta.appendChild(el('div', { class: 'mono', attrs: { style: 'color: var(--brand); font-size: 13px; font-weight: 700;' }, text: fmt$(spend) }));
+    meta.appendChild(el('div', { class: 'text-xs text-muted', text: jobCount + ' job' + (jobCount !== 1 ? 's' : '') }));
+    row.appendChild(meta);
+    wrap.appendChild(row);
+  });
+}
+
+function openCustomerDetail(id) {
+  const c = findById(state.customers, id);
+  if (!c) return;
+  const jobs = state.jobs.filter(j => j.customerId === id).sort((a,b) => (b.date+b.time).localeCompare(a.date+a.time));
+  const spend = state.invoices.filter(i => i.customerId === id && i.paid).reduce((s,i) => s + (i.amount || 0), 0);
+
+  const body = el('div');
+  // Info
+  const info = el('div', { class: 'info-grid' });
+  if (c.phone) info.appendChild(infoItem('phone', 'Phone', c.phone));
+  if (c.email) info.appendChild(infoItem('phone', 'Email', c.email));
+  if (c.vehicle) info.appendChild(infoItem('car', 'Vehicle', c.vehicle));
+  if (c.plate) info.appendChild(infoItem('car', 'Plate', c.plate));
+  body.appendChild(info);
+
+  if (c.notes) {
+    const n = el('div', { attrs: { style: 'padding: 12px; background: var(--surface-2); border-left: 2px solid var(--brand); border-radius: 4px; margin-bottom: 16px;' } });
+    n.appendChild(el('div', { class: 'card-title', text: 'Notes' }));
+    n.appendChild(el('div', { class: 'text-sm', attrs: { style: 'margin-top: 4px;' }, text: c.notes }));
+    body.appendChild(n);
+  }
+
+  const stats = el('div', { attrs: { style: 'display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 16px; padding-top: 12px; border-top: 1px solid var(--border);' } });
+  const statBox = (label, val, color) => {
+    const d = el('div');
+    d.appendChild(el('div', { class: 'card-title', text: label }));
+    d.appendChild(el('div', { attrs: { style: 'font-family: \"JetBrains Mono\", monospace; font-size: 18px; font-weight: 800; margin-top: 4px;' + (color ? ' color: ' + color + ';' : '') }, text: val }));
+    return d;
+  };
+  stats.appendChild(statBox('Total Jobs', String(jobs.length)));
+  stats.appendChild(statBox('Completed', String(jobs.filter(j => j.status === 'completed').length)));
+  stats.appendChild(statBox('Lifetime Value', fmt$(spend), 'var(--brand)'));
+  body.appendChild(stats);
+
+  // Job history
+  if (jobs.length > 0) {
+    body.appendChild(el('div', { class: 'card-title', attrs: { style: 'margin-bottom: 8px;' }, text: 'Job History' }));
+    jobs.forEach(j => {
+      const svc = findById(state.services, j.serviceId);
+      const row = el('div', { attrs: { style: 'display: flex; align-items: center; gap: 10px; padding: 8px; background: var(--surface-2); border-radius: 4px; margin-bottom: 4px; font-size: 12px;' } });
+      row.appendChild(el('div', { class: 'mono text-xs text-muted', attrs: { style: 'min-width: 70px;' }, text: j.date || '—' }));
+      row.appendChild(el('div', { attrs: { style: 'flex: 1;' }, text: svc ? svc.name : '—' }));
+      row.appendChild(el('span', { class: 'tag tag-' + j.status, text: j.status }));
+      row.appendChild(el('div', { class: 'mono', text: fmt$(j.amount) }));
+      body.appendChild(row);
+    });
+  }
+
+  openModal({
+    title: c.name,
+    body: body,
+    footer: [
+      { label: 'Edit', cls: 'btn-ghost', onClick: () => openCustomerModal(c) },
+      { label: 'Book Job', cls: 'btn-primary', onClick: () => openJobModal({ customerId: c.id }) },
+      { label: 'Delete', cls: 'btn-ghost btn-danger', onClick: () => {
+        confirmAction('Delete this customer? Their jobs will remain but become unlinked.', () => {
+          state.customers = state.customers.filter(x => x.id !== c.id);
+          closeModal();
+          update();
+        });
+      }}
+    ]
+  });
+}
+
+function infoItem(iconName, label, value) {
+  const d = el('div', { class: 'info-item' });
+  d.appendChild(icon(iconName));
+  const txt = el('div');
+  txt.appendChild(el('div', { class: 'info-item-label', text: label }));
+  txt.appendChild(el('div', { class: 'info-item-value', text: value }));
+  d.appendChild(txt);
+  return d;
+}
+
+/* ============================================================
+   JOBS (full list view)
+   ============================================================ */
+function renderJobs() {
+  // Same as schedule but with all jobs
+  state.scheduleFilter = state.scheduleFilter || 'all';
+  renderSchedule();
+}
+
+/* ============================================================
+   INVOICES
+   ============================================================ */
+function renderInvoices() {
+  const main = $('#main');
+  main.innerHTML = '';
+
+  const header = el('div', { class: 'view-header' });
+  const titleDiv = el('div');
+  titleDiv.appendChild(el('div', { class: 'view-title', text: 'Billing' }));
+  titleDiv.appendChild(el('h1', { class: 'view-heading', text: 'Invoices' }));
+  header.appendChild(titleDiv);
+  const newBtn = el('button', { class: 'btn btn-primary', text: 'New', on: { click: () => openInvoiceModal(null) } });
+  newBtn.prepend(icon('plus'));
+  header.appendChild(newBtn);
+  main.appendChild(header);
+
+  const filter = state.invoiceFilter || 'unpaid';
+  const filters = el('div', { class: 'supply-filters' });
+  ['unpaid', 'paid', 'all'].forEach(f => {
+    filters.appendChild(el('button', {
+      class: 'filter-chip' + (filter === f ? ' active' : ''),
+      text: f,
+      on: { click: () => { state.invoiceFilter = f; update(); } }
+    }));
+  });
+  main.appendChild(filters);
+
+  let list = state.invoices.slice();
+  if (filter === 'unpaid') list = list.filter(i => !i.paid);
+  else if (filter === 'paid') list = list.filter(i => i.paid);
+  list.sort((a,b) => (b.date || '').localeCompare(a.date || ''));
+
+  if (list.length === 0) {
+    const card = el('div', { class: 'card' });
+    card.appendChild(emptyState('No invoices', 'Create invoice', () => openInvoiceModal(null)));
+    main.appendChild(card);
+    return;
+  }
+
+  list.forEach(inv => {
+    const c = findById(state.customers, inv.customerId);
+    const row = el('div', { class: 'row' });
+    const main2 = el('div', { class: 'row-main', on: { click: () => openInvoiceModal(inv) } });
+    main2.appendChild(el('div', { class: 'row-title', text: (c ? c.name : '—') }));
+    main2.appendChild(el('div', { class: 'row-sub', text: '#' + (inv.id || '').slice(-6).toUpperCase() + ' · ' + (inv.date || 'Undated') }));
+    row.appendChild(main2);
+    const tag = el('span', { class: 'tag tag-' + (inv.paid ? 'paid' : 'unpaid'), text: inv.paid ? 'Paid' : 'Unpaid', attrs: { style: 'cursor: pointer;' }, on: { click: () => togglePaid(inv.id) } });
+    row.appendChild(tag);
+    row.appendChild(el('div', { class: 'row-value', attrs: { style: inv.paid ? '' : 'color: var(--warn);' }, text: fmt$(inv.amount) }));
+    main.appendChild(row);
+  });
+}
+
+function togglePaid(id) {
+  const inv = findById(state.invoices, id);
+  if (!inv) return;
+  inv.paid = !inv.paid;
+  if (inv.paid) inv.paidDate = today(); else inv.paidDate = null;
+  update();
+  toast(inv.paid ? 'Marked paid' : 'Marked unpaid');
+}
+
+/* ============================================================
+   EXPENSES
+   ============================================================ */
+function renderExpenses() {
+  const main = $('#main');
+  main.innerHTML = '';
+
+  const header = el('div', { class: 'view-header' });
+  const titleDiv = el('div');
+  const total = state.expenses.reduce((s,e) => s + (e.amount || 0), 0);
+  titleDiv.appendChild(el('div', { class: 'view-title', text: state.expenses.length + ' entries · ' + fmt$(total) + ' total' }));
+  titleDiv.appendChild(el('h1', { class: 'view-heading', text: 'Expenses' }));
+  header.appendChild(titleDiv);
+  const newBtn = el('button', { class: 'btn btn-primary', text: 'Add', on: { click: () => openExpenseModal(null) } });
+  newBtn.prepend(icon('plus'));
+  header.appendChild(newBtn);
+  main.appendChild(header);
+
+  // By-category summary
+  if (state.expenses.length > 0) {
+    const byCat = {};
+    state.expenses.forEach(e => {
+      byCat[e.category] = (byCat[e.category] || 0) + (e.amount || 0);
+    });
+    const sorted = Object.entries(byCat).sort((a,b) => b[1] - a[1]);
+    const sumCard = el('div', { class: 'card' });
+    sumCard.appendChild(el('div', { class: 'card-title', text: 'By Category' }));
+    sorted.forEach(([cat, amt]) => {
+      const pct = total > 0 ? (amt / total * 100) : 0;
+      const row = el('div', { attrs: { style: 'display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--border);' } });
+      row.appendChild(el('div', { text: cat, attrs: { style: 'font-size: 13px;' } }));
+      const right = el('div', { attrs: { style: 'display: flex; gap: 12px; align-items: center;' } });
+      right.appendChild(el('div', { class: 'text-xs text-muted mono', text: pct.toFixed(1) + '%' }));
+      right.appendChild(el('div', { class: 'mono', attrs: { style: 'font-weight: 600; min-width: 70px; text-align: right;' }, text: fmt$(amt) }));
+      row.appendChild(right);
+      sumCard.appendChild(row);
+    });
+    main.appendChild(sumCard);
+  }
+
+  // List
+  if (state.expenses.length === 0) {
+    const card = el('div', { class: 'card' });
+    card.appendChild(emptyState('No expenses yet', 'Add first expense', () => openExpenseModal(null)));
+    main.appendChild(card);
+    return;
+  }
+
+  const list = state.expenses.slice().sort((a,b) => (b.date || '').localeCompare(a.date || ''));
+  list.forEach(e => {
+    const row = el('div', { class: 'row', on: { click: () => openExpenseModal(e) } });
+    const m = el('div', { class: 'row-main' });
+    m.appendChild(el('div', { class: 'row-title', text: e.description || '—' }));
+    m.appendChild(el('div', { class: 'row-sub', text: (e.category || '') + ' · ' + (e.vendor || '') + ' · ' + (e.date || '—') }));
+    row.appendChild(m);
+    row.appendChild(el('div', { class: 'row-value', attrs: { style: 'color: var(--danger);' }, text: fmt$(e.amount) }));
+    main.appendChild(row);
+  });
+}
+
+/* ============================================================
+   SUPPLIES
+   ============================================================ */
+function renderSupplies() {
+  const main = $('#main');
+  main.innerHTML = '';
+
+  const header = el('div', { class: 'view-header' });
+  const titleDiv = el('div');
+  titleDiv.appendChild(el('div', { class: 'view-title', text: state.supplies.length + ' items' }));
+  titleDiv.appendChild(el('h1', { class: 'view-heading', text: 'Supplies' }));
+  header.appendChild(titleDiv);
+  const newBtn = el('button', { class: 'btn btn-primary', text: 'Add', on: { click: () => openSupplyModal(null) } });
+  newBtn.prepend(icon('plus'));
+  header.appendChild(newBtn);
+  main.appendChild(header);
+
+  // Stats bar
+  const counts = { 'In Stock': 0, 'Low': 0, 'Out': 0, 'On Order': 0 };
+  state.supplies.forEach(s => { counts[s.status] = (counts[s.status] || 0) + 1; });
+  const stats = el('div', { class: 'stats-bar' });
+  const statItem = (cls, num, lbl) => {
+    const d = el('div', { class: 'stat-card ' + cls });
+    d.appendChild(el('div', { class: 'stat-num', text: String(num) }));
+    d.appendChild(el('div', { class: 'stat-label', text: lbl }));
+    return d;
+  };
+  stats.appendChild(statItem('good', counts['In Stock'], 'In Stock'));
+  stats.appendChild(statItem('warn', counts['Low'], 'Low'));
+  stats.appendChild(statItem('bad', counts['Out'], 'Out'));
+  stats.appendChild(statItem('info', counts['On Order'], 'On Order'));
+  main.appendChild(stats);
+
+  // Filters
+  const filter = state.supplyFilter || 'All';
+  const cats = ['All', 'Needs Restock', ...Array.from(new Set(state.supplies.map(s => s.cat)))];
+  const filters = el('div', { class: 'supply-filters' });
+  cats.forEach(f => {
+    filters.appendChild(el('button', {
+      class: 'filter-chip' + (filter === f ? ' active' : ''),
+      text: f,
+      on: { click: () => { state.supplyFilter = f; update(); } }
+    }));
+  });
+  main.appendChild(filters);
+
+  // List
+  let list = state.supplies.slice();
+  if (filter === 'Needs Restock') {
+    list = list.filter(s => s.status === 'Out' || s.status === 'Low');
+  } else if (filter !== 'All') {
+    list = list.filter(s => s.cat === filter);
+  }
+
+  if (list.length === 0) {
+    const card = el('div', { class: 'card' });
+    card.appendChild(emptyState('Nothing matches', null, null));
+    main.appendChild(card);
+    return;
+  }
+
+  list.forEach(s => {
+    const row = el('div', { class: 'supply-row' });
+    const info = el('div', { class: 'supply-info' });
+    info.appendChild(el('div', { class: 'supply-name', text: s.item }));
+    info.appendChild(el('div', { class: 'supply-cat', text: s.cat }));
+    row.appendChild(info);
+
+    const statusBtn = el('button', {
+      class: 'supply-status-btn tag-' + s.status.toLowerCase().replace(' ', '-'),
+      text: s.status,
+      on: { click: () => cycleSupplyStatus(s.item, s.cat) }
+    });
+    row.appendChild(statusBtn);
+
+    const delBtn = el('button', {
+      class: 'btn btn-ghost btn-icon',
+      on: { click: (ev) => {
+        ev.stopPropagation();
+        confirmAction('Remove "' + s.item + '"?', () => {
+          state.supplies = state.supplies.filter(x => !(x.item === s.item && x.cat === s.cat));
+          update();
+        });
+      }}
+    });
+    delBtn.appendChild(icon('trash'));
+    row.appendChild(delBtn);
+    main.appendChild(row);
+  });
+}
+
+function cycleSupplyStatus(item, cat) {
+  const s = state.supplies.find(x => x.item === item && x.cat === cat);
+  if (!s) return;
+  const order = ['In Stock', 'Low', 'Out', 'On Order'];
+  const idx = order.indexOf(s.status);
+  s.status = order[(idx + 1) % order.length];
+  update();
+}
+
+/* ============================================================
+   SERVICES
+   ============================================================ */
+function renderServices() {
+  const main = $('#main');
+  main.innerHTML = '';
+
+  const header = el('div', { class: 'view-header' });
+  const titleDiv = el('div');
+  titleDiv.appendChild(el('div', { class: 'view-title', text: state.services.length + ' offerings' }));
+  titleDiv.appendChild(el('h1', { class: 'view-heading', text: 'Service Menu' }));
+  header.appendChild(titleDiv);
+  const newBtn = el('button', { class: 'btn btn-primary', text: 'New', on: { click: () => openServiceModal(null) } });
+  newBtn.prepend(icon('plus'));
+  header.appendChild(newBtn);
+  main.appendChild(header);
+
+  state.services.forEach(s => {
+    const card = el('div', { class: 'card', on: { click: () => openServiceModal(s) } });
+    card.style.cursor = 'pointer';
+    const top = el('div', { class: 'flex-between mb-2' });
+    const left = el('div');
+    left.appendChild(el('h3', { text: s.name, attrs: { style: 'font-family: \"JetBrains Mono\", monospace; font-size: 14px; font-weight: 800; text-transform: uppercase;' } }));
+    left.appendChild(el('div', { class: 'text-xs mono text-muted', attrs: { style: 'margin-top: 4px;' }, text: s.duration + ' min' }));
+    top.appendChild(left);
+    top.appendChild(el('div', { attrs: { style: 'font-family: \"JetBrains Mono\", monospace; font-size: 22px; font-weight: 800; color: var(--brand);' }, text: fmt$(s.price) }));
+    card.appendChild(top);
+    card.appendChild(el('div', { class: 'text-sm text-dim', text: s.desc || '' }));
+    main.appendChild(card);
+  });
+}
+
+/* ============================================================
+   MODALS
+   ============================================================ */
+function openModal({ title, body, footer }) {
+  const root = $('#modalRoot');
+  root.innerHTML = '';
+  const backdrop = el('div', { class: 'modal-backdrop', on: { click: closeModal } });
+  const modal = el('div', { class: 'modal', on: { click: e => e.stopPropagation() } });
+  const head = el('div', { class: 'modal-header' });
+  head.appendChild(el('div', { class: 'modal-title', text: title }));
+  const closeBtn = el('button', { class: 'btn btn-ghost btn-icon', on: { click: closeModal } });
+  closeBtn.appendChild(icon('x'));
+  head.appendChild(closeBtn);
+  modal.appendChild(head);
+  const bodyWrap = el('div', { class: 'modal-body' });
+  bodyWrap.appendChild(body);
+  modal.appendChild(bodyWrap);
+  if (footer && footer.length) {
+    const f = el('div', { class: 'modal-footer' + (footer.length > 1 ? ' space-between' : '') });
+    footer.forEach(b => {
+      const btn = el('button', {
+        class: 'btn ' + (b.cls || 'btn-ghost'),
+        text: b.label,
+        on: { click: b.onClick }
+      });
+      if (b.disabled) btn.disabled = true;
+      f.appendChild(btn);
+    });
+    modal.appendChild(f);
+  }
+  backdrop.appendChild(modal);
+  root.appendChild(backdrop);
+}
+function closeModal() { $('#modalRoot').innerHTML = ''; }
+
+function field(label, inputEl) {
+  const l = el('label', { class: 'field' });
+  l.appendChild(el('span', { text: label }));
+  l.appendChild(inputEl);
+  return l;
+}
+
+/* --- Customer modal --- */
+function openCustomerModal(c) {
+  const isEdit = !!(c && c.id);
+  const data = Object.assign({ name: '', phone: '', email: '', vehicle: '', plate: '', notes: '' }, c || {});
+  const body = el('div');
+  const nameIn = el('input', { class: 'input', attrs: { value: data.name || '' } });
+  const phoneIn = el('input', { class: 'input', attrs: { value: data.phone || '' } });
+  const emailIn = el('input', { class: 'input', attrs: { value: data.email || '' } });
+  const vehicleIn = el('input', { class: 'input', attrs: { value: data.vehicle || '', placeholder: '2023 Tesla Model Y' } });
+  const plateIn = el('input', { class: 'input', attrs: { value: data.plate || '' } });
+  const notesIn = el('textarea', { attrs: { rows: 3 } }); notesIn.value = data.notes || '';
+  body.appendChild(field('Name *', nameIn));
+  const row1 = el('div', { attrs: { style: 'display: grid; grid-template-columns: 1fr 1fr; gap: 8px;' } });
+  row1.appendChild(field('Phone', phoneIn));
+  row1.appendChild(field('Email', emailIn));
+  body.appendChild(row1);
+  const row2 = el('div', { attrs: { style: 'display: grid; grid-template-columns: 1fr 1fr; gap: 8px;' } });
+  row2.appendChild(field('Vehicle', vehicleIn));
+  row2.appendChild(field('Plate', plateIn));
+  body.appendChild(row2);
+  body.appendChild(field('Notes', notesIn));
+
+  openModal({
+    title: isEdit ? 'Edit Customer' : 'New Customer',
+    body: body,
+    footer: [
+      { label: 'Save', cls: 'btn-primary', onClick: () => {
+        if (!nameIn.value.trim()) { toast('Name is required'); return; }
+        const obj = {
+          id: isEdit ? c.id : nextId('c'),
+          name: nameIn.value.trim(),
+          phone: phoneIn.value.trim(),
+          email: emailIn.value.trim(),
+          vehicle: vehicleIn.value.trim(),
+          plate: plateIn.value.trim(),
+          notes: notesIn.value.trim()
+        };
+        if (isEdit) {
+          state.customers = state.customers.map(x => x.id === c.id ? obj : x);
+        } else {
+          state.customers.push(obj);
+        }
+        closeModal();
+        update();
+        toast(isEdit ? 'Customer updated' : 'Customer added');
+      }}
+    ]
+  });
+}
+
+/* --- Job modal --- */
+function openJobModal(j) {
+  const isEdit = !!(j && j.id);
+  const data = Object.assign({
+    customerId: '', vehicle: '', serviceId: '', amount: '',
+    date: today(), time: '09:00', status: 'scheduled', notes: ''
+  }, j || {});
+
+  const body = el('div');
+  const customerSel = el('select', { class: 'input' });
+  customerSel.appendChild(el('option', { text: 'Select customer...', attrs: { value: '' } }));
+  state.customers.slice().sort((a,b) => a.name.localeCompare(b.name)).forEach(c => {
+    const o = el('option', { text: c.name + (c.vehicle ? ' · ' + c.vehicle : ''), attrs: { value: c.id } });
+    customerSel.appendChild(o);
+  });
+  customerSel.value = data.customerId;
+
+  const vehicleIn = el('input', { class: 'input', attrs: { value: data.vehicle || '', placeholder: 'e.g. Porsche Macan' } });
+
+  const serviceSel = el('select', { class: 'input' });
+  serviceSel.appendChild(el('option', { text: 'Select service...', attrs: { value: '' } }));
+  state.services.forEach(s => {
+    serviceSel.appendChild(el('option', { text: s.name + ' · ' + fmt$(s.price), attrs: { value: s.id } }));
+  });
+  serviceSel.value = data.serviceId;
+  serviceSel.addEventListener('change', () => {
+    const svc = findById(state.services, serviceSel.value);
+    if (svc && !amountIn.value) amountIn.value = svc.price;
+  });
+
+  const amountIn = el('input', { class: 'input', attrs: { type: 'number', value: data.amount || '', placeholder: 'Final price charged' } });
+  const dateIn = el('input', { class: 'input', attrs: { type: 'date', value: data.date || today() } });
+  const timeIn = el('input', { class: 'input', attrs: { type: 'time', value: data.time || '09:00' } });
+
+  const statusSel = el('select', { class: 'input' });
+  ['scheduled','in-progress','completed'].forEach(s => statusSel.appendChild(el('option', { text: s, attrs: { value: s } })));
+  statusSel.value = data.status;
+
+  const notesIn = el('textarea', { attrs: { rows: 2, placeholder: 'Pet hair, tar on bumper, tip amount...' } });
+  notesIn.value = data.notes || '';
+
+  body.appendChild(field('Customer *', customerSel));
+  body.appendChild(field('Vehicle', vehicleIn));
+  body.appendChild(field('Service *', serviceSel));
+  const row = el('div', { attrs: { style: 'display: grid; grid-template-columns: 1fr 1fr; gap: 8px;' } });
+  row.appendChild(field('Date', dateIn));
+  row.appendChild(field('Time', timeIn));
+  body.appendChild(row);
+  const row2 = el('div', { attrs: { style: 'display: grid; grid-template-columns: 1fr 1fr; gap: 8px;' } });
+  row2.appendChild(field('Amount ($)', amountIn));
+  row2.appendChild(field('Status', statusSel));
+  body.appendChild(row2);
+  body.appendChild(field('Notes', notesIn));
+
+  const footer = [
+    { label: 'Save', cls: 'btn-primary', onClick: () => {
+      if (!customerSel.value) { toast('Select a customer'); return; }
+      if (!serviceSel.value) { toast('Select a service'); return; }
+      const svc = findById(state.services, serviceSel.value);
+      const obj = {
+        id: isEdit ? j.id : nextId('j'),
+        customerId: customerSel.value,
+        vehicle: vehicleIn.value.trim(),
+        serviceId: serviceSel.value,
+        amount: parseFloat(amountIn.value) || (svc ? svc.price : 0),
+        date: dateIn.value,
+        time: timeIn.value,
+        status: statusSel.value,
+        notes: notesIn.value.trim()
+      };
+      if (isEdit) {
+        state.jobs = state.jobs.map(x => x.id === j.id ? obj : x);
+      } else {
+        state.jobs.push(obj);
+      }
+      closeModal();
+      update();
+      toast(isEdit ? 'Job updated' : 'Job saved');
+    }}
+  ];
+  if (isEdit) {
+    footer.unshift({ label: 'Delete', cls: 'btn-ghost btn-danger', onClick: () => {
+      confirmAction('Delete this job?', () => {
+        state.jobs = state.jobs.filter(x => x.id !== j.id);
+        closeModal();
+        update();
+      });
+    }});
+  }
+
+  openModal({ title: isEdit ? 'Edit Job' : 'New Job', body: body, footer: footer });
+}
+
+/* --- Invoice modal --- */
+function openInvoiceModal(inv) {
+  const isEdit = !!(inv && inv.id);
+  const data = Object.assign({
+    customerId: '', jobId: '', amount: 0, description: '',
+    date: today(), paid: false
+  }, inv || {});
+
+  const body = el('div');
+  const customerSel = el('select', { class: 'input' });
+  customerSel.appendChild(el('option', { text: 'Select customer...', attrs: { value: '' } }));
+  state.customers.forEach(c => customerSel.appendChild(el('option', { text: c.name, attrs: { value: c.id } })));
+  customerSel.value = data.customerId;
+
+  const jobSel = el('select', { class: 'input' });
+  jobSel.appendChild(el('option', { text: 'None — manual invoice', attrs: { value: '' } }));
+
+  const rebuildJobOptions = () => {
+    jobSel.innerHTML = '';
+    jobSel.appendChild(el('option', { text: 'None — manual invoice', attrs: { value: '' } }));
+    const cid = customerSel.value;
+    state.jobs.filter(j => !cid || j.customerId === cid).forEach(j => {
+      const c = findById(state.customers, j.customerId);
+      const s = findById(state.services, j.serviceId);
+      jobSel.appendChild(el('option', {
+        text: (j.date || '—') + ' · ' + (c ? c.name : '—') + ' · ' + (s ? s.name : ''),
+        attrs: { value: j.id }
+      }));
+    });
+    jobSel.value = data.jobId || '';
+  };
+  rebuildJobOptions();
+  customerSel.addEventListener('change', rebuildJobOptions);
+
+  jobSel.addEventListener('change', () => {
+    const j = findById(state.jobs, jobSel.value);
+    if (j) {
+      const s = findById(state.services, j.serviceId);
+      customerSel.value = j.customerId;
+      amountIn.value = j.amount || (s ? s.price : 0);
+      descIn.value = j.notes || (s ? s.name : '');
+      dateIn.value = j.date || today();
+    }
+  });
+
+  const descIn = el('input', { class: 'input', attrs: { value: data.description || '' } });
+  const amountIn = el('input', { class: 'input', attrs: { type: 'number', value: data.amount || '' } });
+  const dateIn = el('input', { class: 'input', attrs: { type: 'date', value: data.date || today() } });
+
+  const paidLbl = el('label', { class: 'checkbox-field' });
+  const paidCb = el('input', { attrs: { type: 'checkbox' } });
+  paidCb.checked = !!data.paid;
+  paidLbl.appendChild(paidCb);
+  paidLbl.appendChild(el('span', { text: 'Mark as paid' }));
+
+  body.appendChild(field('Customer *', customerSel));
+  body.appendChild(field('Link to Job (optional)', jobSel));
+  body.appendChild(field('Description *', descIn));
+  const row = el('div', { attrs: { style: 'display: grid; grid-template-columns: 1fr 1fr; gap: 8px;' } });
+  row.appendChild(field('Amount ($) *', amountIn));
+  row.appendChild(field('Date', dateIn));
+  body.appendChild(row);
+  body.appendChild(paidLbl);
+
+  const footer = [
+    { label: 'Save', cls: 'btn-primary', onClick: () => {
+      if (!customerSel.value) { toast('Select a customer'); return; }
+      if (!descIn.value.trim()) { toast('Description required'); return; }
+      const obj = {
+        id: isEdit ? inv.id : nextId('i'),
+        customerId: customerSel.value,
+        jobId: jobSel.value || null,
+        description: descIn.value.trim(),
+        amount: parseFloat(amountIn.value) || 0,
+        date: dateIn.value,
+        paid: paidCb.checked,
+        paidDate: paidCb.checked ? today() : null
+      };
+      if (isEdit) {
+        state.invoices = state.invoices.map(x => x.id === inv.id ? obj : x);
+      } else {
+        state.invoices.push(obj);
+      }
+      closeModal();
+      update();
+      toast('Invoice saved');
+    }}
+  ];
+  if (isEdit) {
+    footer.unshift({ label: 'Delete', cls: 'btn-ghost btn-danger', onClick: () => {
+      confirmAction('Delete this invoice?', () => {
+        state.invoices = state.invoices.filter(x => x.id !== inv.id);
+        closeModal();
+        update();
+      });
+    }});
+  }
+
+  openModal({ title: isEdit ? 'Edit Invoice' : 'New Invoice', body: body, footer: footer });
+}
+
+/* --- Expense modal --- */
+function openExpenseModal(e) {
+  const isEdit = !!(e && e.id);
+  const data = Object.assign({
+    date: today(), category: 'Supplies', description: '', vendor: '',
+    amount: '', paymentMethod: 'Credit Card', reimbursable: false,
+    jobId: '', receipt: false, notes: ''
+  }, e || {});
+
+  const body = el('div');
+  const dateIn = el('input', { class: 'input', attrs: { type: 'date', value: data.date } });
+  const catSel = el('select', { class: 'input' });
+  SEED_EXPENSE_CATEGORIES.forEach(c => catSel.appendChild(el('option', { text: c, attrs: { value: c } })));
+  catSel.value = data.category;
+
+  const descIn = el('input', { class: 'input', attrs: { value: data.description } });
+  const vendorIn = el('input', { class: 'input', attrs: { value: data.vendor } });
+  const amountIn = el('input', { class: 'input', attrs: { type: 'number', step: '0.01', value: data.amount } });
+
+  const paySel = el('select', { class: 'input' });
+  SEED_PAYMENT_METHODS.forEach(p => paySel.appendChild(el('option', { text: p, attrs: { value: p } })));
+  paySel.value = data.paymentMethod;
+
+  const reimbLbl = el('label', { class: 'checkbox-field' });
+  const reimbCb = el('input', { attrs: { type: 'checkbox' } });
+  reimbCb.checked = !!data.reimbursable;
+  reimbLbl.appendChild(reimbCb);
+  reimbLbl.appendChild(el('span', { text: 'Reimbursable / linked to a job' }));
+
+  const notesIn = el('textarea', { attrs: { rows: 2 } });
+  notesIn.value = data.notes || '';
+
+  const row1 = el('div', { attrs: { style: 'display: grid; grid-template-columns: 1fr 1fr; gap: 8px;' } });
+  row1.appendChild(field('Date', dateIn));
+  row1.appendChild(field('Category', catSel));
+  body.appendChild(row1);
+  body.appendChild(field('Description *', descIn));
+  body.appendChild(field('Vendor', vendorIn));
+  const row2 = el('div', { attrs: { style: 'display: grid; grid-template-columns: 1fr 1fr; gap: 8px;' } });
+  row2.appendChild(field('Amount ($) *', amountIn));
+  row2.appendChild(field('Payment', paySel));
+  body.appendChild(row2);
+  body.appendChild(reimbLbl);
+  body.appendChild(field('Notes', notesIn));
+
+  const footer = [
+    { label: 'Save', cls: 'btn-primary', onClick: () => {
+      if (!descIn.value.trim()) { toast('Description required'); return; }
+      if (!amountIn.value) { toast('Amount required'); return; }
+      const obj = {
+        id: isEdit ? e.id : nextId('e'),
+        date: dateIn.value,
+        category: catSel.value,
+        description: descIn.value.trim(),
+        vendor: vendorIn.value.trim(),
+        amount: parseFloat(amountIn.value) || 0,
+        paymentMethod: paySel.value,
+        reimbursable: reimbCb.checked,
+        notes: notesIn.value.trim()
+      };
+      if (isEdit) {
+        state.expenses = state.expenses.map(x => x.id === e.id ? obj : x);
+      } else {
+        state.expenses.push(obj);
+      }
+      closeModal();
+      update();
+      toast('Expense saved');
+    }}
+  ];
+  if (isEdit) {
+    footer.unshift({ label: 'Delete', cls: 'btn-ghost btn-danger', onClick: () => {
+      confirmAction('Delete this expense?', () => {
+        state.expenses = state.expenses.filter(x => x.id !== e.id);
+        closeModal();
+        update();
+      });
+    }});
+  }
+
+  openModal({ title: isEdit ? 'Edit Expense' : 'New Expense', body: body, footer: footer });
+}
+
+/* --- Service modal --- */
+function openServiceModal(s) {
+  const isEdit = !!(s && s.id);
+  const data = Object.assign({ name: '', price: '', duration: 60, desc: '' }, s || {});
+
+  const body = el('div');
+  const nameIn = el('input', { class: 'input', attrs: { value: data.name } });
+  const priceIn = el('input', { class: 'input', attrs: { type: 'number', value: data.price } });
+  const durIn = el('input', { class: 'input', attrs: { type: 'number', value: data.duration } });
+  const descIn = el('textarea', { attrs: { rows: 3 } }); descIn.value = data.desc || '';
+  body.appendChild(field('Service Name *', nameIn));
+  const row = el('div', { attrs: { style: 'display: grid; grid-template-columns: 1fr 1fr; gap: 8px;' } });
+  row.appendChild(field('Price ($) *', priceIn));
+  row.appendChild(field('Duration (min)', durIn));
+  body.appendChild(row);
+  body.appendChild(field('Description', descIn));
+
+  const footer = [
+    { label: 'Save', cls: 'btn-primary', onClick: () => {
+      if (!nameIn.value.trim() || !priceIn.value) { toast('Name and price required'); return; }
+      const obj = {
+        id: isEdit ? s.id : nextId('s'),
+        name: nameIn.value.trim(),
+        price: parseFloat(priceIn.value) || 0,
+        duration: parseInt(durIn.value) || 60,
+        desc: descIn.value.trim()
+      };
+      if (isEdit) {
+        state.services = state.services.map(x => x.id === s.id ? obj : x);
+      } else {
+        state.services.push(obj);
+      }
+      closeModal();
+      update();
+      toast('Service saved');
+    }}
+  ];
+  if (isEdit) {
+    footer.unshift({ label: 'Delete', cls: 'btn-ghost btn-danger', onClick: () => {
+      confirmAction('Delete this service?', () => {
+        state.services = state.services.filter(x => x.id !== s.id);
+        closeModal();
+        update();
+      });
+    }});
+  }
+
+  openModal({ title: isEdit ? 'Edit Service' : 'New Service', body: body, footer: footer });
+}
+
+/* --- Supply modal --- */
+function openSupplyModal(s) {
+  const isEdit = !!s;
+  const data = Object.assign({ cat: 'Interior', item: '', status: 'In Stock' }, s || {});
+
+  const body = el('div');
+  const catSel = el('select', { class: 'input' });
+  const existingCats = Array.from(new Set(state.supplies.map(x => x.cat)));
+  const defaultCats = ['Interior','Exterior','Wheels','Glass','Engine Bay','Equipment','Consumables','Safety'];
+  const allCats = Array.from(new Set([...defaultCats, ...existingCats]));
+  allCats.forEach(c => catSel.appendChild(el('option', { text: c, attrs: { value: c } })));
+  catSel.value = data.cat;
+
+  const itemIn = el('input', { class: 'input', attrs: { value: data.item } });
+  const statusSel = el('select', { class: 'input' });
+  ['In Stock','Low','Out','On Order'].forEach(s => statusSel.appendChild(el('option', { text: s, attrs: { value: s } })));
+  statusSel.value = data.status;
+
+  body.appendChild(field('Category', catSel));
+  body.appendChild(field('Item Name *', itemIn));
+  body.appendChild(field('Status', statusSel));
+
+  const footer = [
+    { label: 'Save', cls: 'btn-primary', onClick: () => {
+      if (!itemIn.value.trim()) { toast('Item name required'); return; }
+      const obj = { cat: catSel.value, item: itemIn.value.trim(), status: statusSel.value };
+      if (isEdit) {
+        state.supplies = state.supplies.map(x => (x.item === s.item && x.cat === s.cat) ? obj : x);
+      } else {
+        state.supplies.push(obj);
+      }
+      closeModal();
+      update();
+      toast('Saved');
+    }}
+  ];
+
+  openModal({ title: isEdit ? 'Edit Supply' : 'New Supply', body: body, footer: footer });
+}
+
+/* ============================================================
+   RENDER ROUTER
+   ============================================================ */
+function render() {
+  renderNav();
+  const v = state.currentView;
+  if (v === 'dashboard') renderDashboard();
+  else if (v === 'schedule') renderSchedule();
+  else if (v === 'customers') renderCustomers();
+  else if (v === 'jobs') renderJobs();
+  else if (v === 'invoices') renderInvoices();
+  else if (v === 'expenses') renderExpenses();
+  else if (v === 'supplies') renderSupplies();
+  else if (v === 'services') renderServices();
+
+  // Header date
+  const hd = $('#headerDate');
+  if (hd) hd.textContent = new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+}
+
+// Initial render
+render();
+</script>
+</body>
+</html>
